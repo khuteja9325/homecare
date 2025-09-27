@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, DollarSign, Star, User, Bell, Settings, BookOpen, TrendingUp } from 'lucide-react';
+import { Calendar, DollarSign, Star, User, Bell, TrendingUp } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
 

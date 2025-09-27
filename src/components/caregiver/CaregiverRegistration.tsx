@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, AlertCircle, Upload, CreditCard } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import ServiceSelection from './registration/ServiceSelection';
 import PersonalInfo from './registration/PersonalInfo';
@@ -8,6 +8,16 @@ import DocumentUpload from './registration/DocumentUpload';
 import VerificationStep from './registration/VerificationStep';
 import PaymentStep from './registration/PaymentStep';
 import ProfileCreation from './registration/ProfileCreation';
+
+// Unified Props Interface for all registration steps
+interface RegistrationStepProps {
+  data: RegistrationData;
+  updateData: (updates: Partial<RegistrationData>) => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  onComplete: () => void;
+  currentStep: number;
+}
 
 export interface RegistrationData {
   serviceType: string;
@@ -97,7 +107,7 @@ const CaregiverRegistration: React.FC = () => {
     }
   });
 
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
   const navigate = useNavigate();
 
   const steps = [
@@ -130,7 +140,7 @@ const CaregiverRegistration: React.FC = () => {
     setRegistrationData(prev => ({ ...prev, ...updates }));
   };
 
-  const CurrentStepComponent = steps[currentStep - 1].component;
+  const CurrentStepComponent = steps[currentStep - 1].component as React.ComponentType<RegistrationStepProps>;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
