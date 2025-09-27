@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, Baby, Users as UserNurse, Activity, CheckCircle, AlertCircle, Upload, User, Lock, Mail, Phone, Calendar, GraduationCap, MapPin, FileText } from 'lucide-react';
-import CaregiverProfileSetup from './components/CaregiverProfileSetup';
+
 interface ServiceModule {
   id: string;
   name: string;
@@ -639,71 +639,17 @@ function App() {
       </div>
     </div>
   );
+}
 
-  const renderProfile = () => (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="bg-blue-600 text-white p-8 text-center">
-            <div className="w-24 h-24 bg-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <User className="h-12 w-12" />
-            </div>
-            <h2 className="text-2xl font-bold">Welcome to CareConnect!</h2>
-            <p className="text-blue-100 mt-2">Your registration has been approved</p>
-          </div>
-          
-          <div className="p-8">
-            <div className="text-center mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                {registrationData.personalInfo.fullName}
-              </h3>
-              <p className="text-gray-600">
-                {serviceModules.find(s => s.id === selectedService)?.name} Professional
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Contact Information</h4>
-                <p className="text-gray-600 text-sm">Email: {registrationData.personalInfo.email}</p>
-                <p className="text-gray-600 text-sm">Phone: {registrationData.personalInfo.phone}</p>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Professional Details</h4>
-                <p className="text-gray-600 text-sm">Qualification: {registrationData.personalInfo.qualification}</p>
-                <p className="text-gray-600 text-sm">Experience: {registrationData.personalInfo.experience} years</p>
-              </div>
-            </div>
-            
-            <div className="text-center space-y-4">
-              <p className="text-gray-600">
-                You can now start accepting appointments and managing your services.
-              </p>
-              <div className="space-x-4">
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                  Complete Profile Setup
-                </button>
-                <button
-                  onClick={() => setCurrentView('home')}
-                  className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors"
-                >
-                  Back to Home
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
+function App() {
   return (
-    <div>
-      {currentView === 'home' && renderHome()}
-      {currentView === 'register' && renderRegistration()}
-      {currentView === 'profile' && renderProfile()}
-    </div>
+    <Router>
+      <AuthProvider>
+        <DataProvider>
+          <AppContent />
+        </DataProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
