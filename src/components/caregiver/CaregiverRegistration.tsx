@@ -110,7 +110,7 @@ const CaregiverRegistration: React.FC = () => {
   const { updateUser } = useAuth();
   const navigate = useNavigate();
 
-  const steps = [
+  const steps = [ 
     { number: 1, title: 'Service Selection', component: ServiceSelection },
     { number: 2, title: 'Personal Information', component: PersonalInfo },
     { number: 3, title: 'Document Upload', component: DocumentUpload },
