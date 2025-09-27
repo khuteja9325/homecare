@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Users, Baby, Activity, Users as UserNurse, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin,  } from "lucide-react";
 
 const HomePage: React.FC = () => {
   const services = [
@@ -124,17 +125,80 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+       <footer className="bg-gray-900 text-gray-300 py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Logo + Tagline */}
+        <div className="flex flex-col items-center text-center mb-10">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Heart className="h-6 w-6 text-blue-400" />
-            <span className="text-xl font-semibold">CareConnect</span>
+            <Heart className="h-7 w-7 text-blue-400" />
+            <span className="text-2xl font-bold text-white">CareConnect</span>
           </div>
           <p className="text-gray-400">
             Trusted healthcare services at your doorstep
           </p>
         </div>
-      </footer>
+
+        {/* Grid Links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
+          {/* About */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-3">About Us</h3>
+            <p className="text-gray-400 text-sm">
+              CareConnect bridges patients with qualified healthcare 
+              professionals, ensuring safe and timely care at home.
+            </p>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-3">Services</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:text-white">Home Nursing</a></li>
+              <li><a href="#" className="hover:text-white">Physiotherapy</a></li>
+              <li><a href="#" className="hover:text-white">Elderly Care</a></li>
+              <li><a href="#" className="hover:text-white">Maternity Care</a></li>
+            </ul>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:text-white">About</a></li>
+              <li><a href="#" className="hover:text-white">Contact</a></li>
+              <li><a href="#" className="hover:text-white">FAQs</a></li>
+              <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
+            <ul className="space-y-2 text-sm">
+              <li>Email: support@careconnect.com</li>
+              <li>Phone: +91 98765 43210</li>
+              <li>Location: Pune, India</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between">
+          {/* Copyright */}
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} CareConnect. All rights reserved.
+          </p>
+
+          {/* Social Icons */}
+          <div className="flex space-x-5 mt-4 sm:mt-0">
+            <a href="#" className="hover:text-white"><Facebook className="h-5 w-5" /></a>
+            <a href="#" className="hover:text-white"><Twitter className="h-5 w-5" /></a>
+            <a href="#" className="hover:text-white"><Instagram className="h-5 w-5" /></a>
+            <a href="#" className="hover:text-white"><Linkedin className="h-5 w-5" /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
     </div>
   );
 };
