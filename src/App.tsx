@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, Baby, Users as UserNurse, Activity, CheckCircle, AlertCircle, Upload, User, Lock, Mail, Phone, Calendar, GraduationCap, MapPin, FileText } from 'lucide-react';
-
+import CaregiverProfileSetup from './components/CaregiverProfileSetup';
 interface ServiceModule {
   id: string;
   name: string;
