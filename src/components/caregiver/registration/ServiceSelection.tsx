@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserNurse, Activity, Heart, Baby } from 'lucide-react';
+import { Users as UserNurse, Activity, Heart, Baby } from 'lucide-react';
 import { RegistrationData } from '../CaregiverRegistration';
 
 interface ServiceSelectionProps {

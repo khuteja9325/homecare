@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Users, Baby, Activity, UserNurse, ArrowRight } from 'lucide-react';
+import { Heart, Users, Baby, Activity, Users as UserNurse, ArrowRight } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const services = [
