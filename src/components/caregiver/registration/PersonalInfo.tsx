@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Briefcase, FileText, Upload } from 'lucide-react';
 // FIX: Using the explicit absolute path for the parent component to resolve import errors.
-import { RegistrationData } from 'C:/Users/ASUS/homecare/src/components/caregiver/CaregiverRegistration.tsx'; 
+import { RegistrationData } from '../CaregiverRegistration';
 
 interface ProfessionalInfoStepProps {
   data: RegistrationData;

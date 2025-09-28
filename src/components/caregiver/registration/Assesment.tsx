@@ -7,7 +7,7 @@ type AssessmentStepProps = {
   onPrevious: () => void;
 };
 
-const AssessmentStep: React.FC<AssessmentStepProps> = ({ data, updateData, onNext, onPrevious }) => {
+const AssessmentStep: React.FC<AssessmentStepProps> = ({ updateData, onNext, onPrevious }) => {
   const [score, setScore] = useState<number | null>(null);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Briefcase, FileText, ArrowLeft, ArrowRight } from 'lucide-react';
-import { RegistrationData } from 'C:/Users/ASUS/homecare/src/components/caregiver/CaregiverRegistration.tsx'; 
+import { RegistrationData } from '../CaregiverRegistration.tsx';
 
 // Define a type for localized errors
 type ProfessionalErrors = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, User } from 'lucide-react';
 // Correct import path for the interface
-import { RegistrationData } from 'C:/Users/ASUS/homecare/src/components/caregiver/CaregiverRegistration.tsx'; 
+import { RegistrationData } from './CaregiverRegistration.tsx';
 // C:\Users\ASUS\homecare\src\components\caregiver\CaregiverRegistration.tsx
 
 interface BasicInfoStepProps {
