@@ -4,10 +4,9 @@ import { Heart, Baby, Activity, Users as UserNurse, ArrowRight } from 'lucide-re
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 const images = [
-  '/path/to/nursing-care-image.jpg',
-  '/path/to/physiotherapy-image.jpg',
-  '/path/to/postnatal-care-image.jpg',
-  '/path/to/babysitting-image.jpg',
+  'src/public/nursing_hero.svg',
+  'src/public/babysitting_hero.svg',
+  'src/public/physiotherapy_hero.svg',
 ];
 
 const HomePage: React.FC = () => {
@@ -59,6 +58,25 @@ const HomePage: React.FC = () => {
     }
   ];
 
+  const analyticsData = [
+    {
+      label: "India's Leading",
+      title: "Home Health Care Brand",
+    },
+    {
+      label: "10000+",
+      title: "Bookings",
+    },
+    {
+      label: "500+",
+      title: "Verified Caregivers",
+    },
+    {
+      label: "1000+",
+      title: "Registered Customers",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
       {/* Hero Section */}
@@ -66,9 +84,9 @@ const HomePage: React.FC = () => {
         className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" 
         style={bgImageStyle}
       >
-        <div className="absolute inset-0 bg-white opacity-40"></div>
+        <div className="absolute inset-0 bg-white opacity-10"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-7xl font-bold text-gray-900 mb-6">
             Quality Healthcare
             <span className="text-blue-600 block">At Your Doorstep</span>
           </h2>
@@ -93,6 +111,8 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <hr className="my-16 border-gray-200" />
 
       {/* Services Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -123,6 +143,35 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <hr className="my-16 border-gray-200" />
+
+      {/* Analytics Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+            Our Platform in Numbers
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {analyticsData.map((item, index) => (
+              <div key={index} className="flex flex-col items-center p-8 text-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {index === 0 && <><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" /><path d="M12 12c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0-4c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z" /></>}
+                    {index === 1 && <><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" /><path d="M16 12H8v2h8zm0 4H8v2h8zm-4-8h-2V6h2z" /></>}
+                    {index === 2 && <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2.82 9.29c.39-.39 1.02-.39 1.41 0L12 12.59l1.41-1.41c.39-.39 1.02-.39 1.41 0s.39 1.02 0 1.41l-2 2c-.39.39-1.02.39-1.41 0l-2-2c-.39-.39-.39-1.02 0-1.41zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>}
+                    {index === 3 && <><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" /><path d="M12 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-4c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z" /></>}
+                  </svg>
+                </div>
+                <h4 className="text-3xl font-bold text-gray-900 mb-2">{item.label}</h4>
+                <p className="text-md text-gray-600 font-medium">{item.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <hr className="my-16 border-gray-200" />
       
       {/* CTA Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-blue-600">

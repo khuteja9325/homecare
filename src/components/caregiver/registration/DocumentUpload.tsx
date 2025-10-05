@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle, AlertCircle, Clock, Loader2, ArrowLeft, ArrowRight, UploadCloud, XCircle } from 'lucide-react';
-import { RegistrationData } from 'C:/Users/ASUS/homecare/src/components/caregiver/CaregiverRegistration.tsx';
+import { RegistrationData } from '../CaregiverRegistration.tsx';
 
 // Define a type for a single document state
 type DocumentStatus = 'pending' | 'uploaded' | 'verified' | 'failed';

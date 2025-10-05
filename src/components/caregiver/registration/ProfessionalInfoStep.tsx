@@ -1,157 +1,134 @@
-import React, { useState } from 'react';
-import { Briefcase, FileText, ArrowLeft, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, User } from 'lucide-react';
+// Correct import path for the interface
 import { RegistrationData } from '../CaregiverRegistration.tsx';
 
-// Define a type for localized errors
-type ProfessionalErrors = {
-  experience?: string;
-  qualifications?: string;
-  professionalId?: string;
-};
-
-interface ProfessionalInfoStepProps {
-  data: RegistrationData;
-  updateData: (updates: Partial<RegistrationData>) => void;
-  onNext: () => void;
-  onPrevious: () => void;
+// FIX: Added onPrevious to the props interface to resolve the assignment error in the parent component.
+interface BasicInfoStepProps {
+  data: RegistrationData; // Or equivalent type
+  updateData: (updates: Partial<RegistrationData>) => void;
+  onNext: () => void;
+  onPrevious?: () => void; // Added for structural consistency, made optional as it's Step 1
 }
+const BasicInfoStep: React.FC<BasicInfoStepProps> = ({ data, updateData, onNext, onPrevious }) => {
+  
+  // Checks if all required fields for this step are filled
+  const isFormValid = 
+    data.firstName.trim() !== '' &&
+    data.lastName.trim() !== '' &&
+    data.email.trim() !== '' &&
+    data.phone.trim() !== '' &&
+    data.serviceType !== '';
 
-const ProfessionalInfoStep: React.FC<ProfessionalInfoStepProps> = ({ data, updateData, onNext, onPrevious }) => {
-  const [errors, setErrors] = useState<ProfessionalErrors>({});
+  // FIX: Updated handleSubmit to include onPrevious in props list, though it remains unused here.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isFormValid) {
+      onNext();
+    } else {
+      // NOTE: alert() should ideally be replaced with a custom modal in a real app.
+      alert("Please fill in all required fields and select a service type.");
+    }
+  };
 
-  // Dynamically change the label based on the selected service type
-  const professionalIdLabel = 
-    data.serviceType === 'nursing' 
-      ? "NUID Certificate/License Number (Required)" 
-      : data.serviceType === 'physiotherapy' 
-      ? "IAP Membership ID (Required)" 
-      : "Professional ID / Certificate Number (Required)";
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="text-center mb-6">
+        <User className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+        <h3 className="text-2xl font-semibold text-gray-900">Step 1: Basic Information</h3>
+        <p className="text-gray-600 text-sm">Tell us a little about yourself and your primary service.</p>
+      </div>
 
-  const validate = () => {
-    const newErrors: ProfessionalErrors = {};
-    if (data.experience < 0) newErrors.experience = 'Experience cannot be negative.';
-    if (data.experience === 0) newErrors.experience = 'Please enter your years of experience.';
-    if (data.qualifications.trim().length < 5) newErrors.qualifications = 'Please provide a brief summary of your highest qualification.';
-    if (data.documents.professionalId.trim() === '') newErrors.professionalId = 'A valid professional ID is required.';
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* First Name */}
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+          <input 
+            id="firstName"
+            type="text" 
+            placeholder="e.g., Jane" 
+            value={data.firstName} 
+            onChange={(e) => updateData({ firstName: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        
+        {/* Last Name */}
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+          <input 
+            id="lastName"
+            type="text" 
+            placeholder="e.g., Doe" 
+            value={data.lastName} 
+            onChange={(e) => updateData({ lastName: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+      </div>
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+      {/* Email */}
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+        <input 
+          id="email"
+          type="email" 
+          placeholder="jane.doe@example.com" 
+          value={data.email} 
+          onChange={(e) => updateData({ email: e.target.value })}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validate()) {
-      onNext();
-    }
-  };
+      {/* Phone */}
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+        <input 
+          id="phone"
+          type="tel" 
+          placeholder="e.g., 9876543210" 
+          value={data.phone} 
+          onChange={(e) => updateData({ phone: e.target.value })}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
 
-  const handleExperienceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    updateData({ experience: value || 0 });
-    // Clear error instantly if value becomes valid
-    if (value > 0) setErrors(prev => ({ ...prev, experience: undefined }));
-  };
-  
-  // FIX: Correctly updates the nested 'documents' object by merging existing fields.
-  const handleProfessionalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    updateData({ 
-        documents: { 
-            ...data.documents, // Spread existing documents (like nationalId)
-            professionalId: value 
-        } 
-    });
-    if (value.trim() !== '') setErrors(prev => ({ ...prev, professionalId: undefined }));
-  };
-
-  const handleQualificationsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    updateData({ qualifications: value });
-    if (value.trim().length >= 5) setErrors(prev => ({ ...prev, qualifications: undefined }));
-  };
-
-  const isFormValid = Object.keys(errors).length === 0 && data.experience > 0 && data.qualifications.trim() !== '' && data.documents.professionalId.trim() !== '';
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="text-center mb-6 border-b pb-4">
-        <Briefcase className="h-10 w-10 text-blue-600 mx-auto mb-2 bg-blue-50 p-2 rounded-full shadow-sm" />
-        <h3 className="text-2xl font-bold text-gray-900">Step 2: Professional Details</h3>
-        <p className="text-gray-600 text-sm">Please provide your credentials and experience.</p>
-      </div>
-
-      {/* Years of Experience */}
-      <div>
-        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">Years of Relevant Experience</label>
-        <input 
-          id="experience"
-          type="number" 
-          placeholder="e.g., 5" 
-          min="0"
-          value={data.experience} 
-          onChange={handleExperienceChange}
-          className={`w-full p-3 border ${errors.experience ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow`}
-          required
-        />
-        {errors.experience && <p className="text-red-500 text-xs mt-1 font-medium">{errors.experience}</p>}
-      </div>
-
-      {/* Qualifications */}
-      <div>
-        <label htmlFor="qualifications" className="block text-sm font-medium text-gray-700 mb-1">Highest Qualification</label>
-        <input 
-          id="qualifications"
-          type="text" 
-          placeholder="e.g., B.Sc. Nursing, Certified Child Care Professional" 
-          value={data.qualifications} 
-          onChange={handleQualificationsChange}
-          className={`w-full p-3 border ${errors.qualifications ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow`}
-          required
-        />
-        {errors.qualifications && <p className="text-red-500 text-xs mt-1 font-medium">{errors.qualifications}</p>}
-      </div>
-
-      {/* Professional ID (Conditional Label) */}
-      <div>
-        <label htmlFor="professionalId" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-            <FileText size={16} className="mr-1 text-blue-500"/> {professionalIdLabel}
-        </label>
-        <input 
-          id="professionalId"
-          type="text" 
-          placeholder="Enter your registration/license number"
-          value={data.documents.professionalId} 
-          onChange={handleProfessionalIdChange}
-          className={`w-full p-3 border ${errors.professionalId ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow`}
-          required
-        />
-        {errors.professionalId && <p className="text-red-500 text-xs mt-1 font-medium">{errors.professionalId}</p>}
-        <p className="mt-1 text-xs text-gray-500">This ID will be used in the next step for verification.</p>
-      </div>
-      
-      {/* Navigation Buttons */}
-      <div className="flex space-x-4 pt-4">
-        <button 
-          type="button" 
-          onClick={onPrevious} 
-          className="flex-1 inline-flex items-center justify-center bg-gray-200 text-gray-800 py-3 rounded-xl hover:bg-gray-300 font-semibold transition-colors shadow-sm"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" /> Previous
-        </button>
-        <button 
-          type="submit" 
-          disabled={!isFormValid}
-          className={`flex-1 inline-flex items-center justify-center py-3 rounded-xl font-semibold transition-all shadow-md text-lg ${
-            isFormValid 
-              ? 'bg-blue-600 text-white hover:bg-blue-700' 
-              : 'bg-gray-300 text-gray-600 cursor-not-allowed opacity-70'
-          }`}
-        >
-          Next (Verification) <ArrowRight className="h-5 w-5 ml-2" />
-        </button>
-      </div>
-    </form>
-  );
+      {/* Service Type */}
+      <div>
+        <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-1">Primary Service Offering</label>
+        <select 
+          id="serviceType"
+          value={data.serviceType} 
+          onChange={(e) => updateData({ serviceType: e.target.value as any })}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="" disabled>Select a service type</option>
+          <option value="nursing">Certified Nursing Care</option>
+          <option value="physiotherapy">Physiotherapy / Rehab</option>
+          <option value="babysitting">Babysitting / Childcare</option>
+          <option value="postnatal">Postnatal Care / Japa Maid</option>
+        </select>
+      </div>
+      
+      {/* Submit Button */}
+      <button 
+        type="submit" 
+        disabled={!isFormValid}
+        className={`w-full flex items-center justify-center py-3 rounded-lg font-semibold transition-colors text-lg ${
+          isFormValid 
+            ? 'bg-blue-600 text-white hover:bg-blue-700' 
+            : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+        }`}
+      >
+        Continue to Professional Details <ArrowRight className="h-5 w-5 ml-2" />
+      </button>
+    </form>
+  );
 };
 
-export default ProfessionalInfoStep;
+export default BasicInfoStep;

@@ -7,8 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  // This is the configuration for GitHub Pages.
-  // Replace 'your-repo-name' with the actual name of your repository.
-  // The leading and trailing slashes are important.
-  base: '/homecare/',
+  // ✅ Updated configuration for Vercel deployment
+  // Use relative base path so assets load correctly
+  base: './',
 });

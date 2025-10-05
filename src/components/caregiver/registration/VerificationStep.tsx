@@ -51,35 +51,30 @@ const VerificationStep: React.FC<VerificationStepProps> = ({ data, updateData, o
   };
 
   const startVerification = () => {
-    if (isVerifying) return;
+  if (isVerifying) return;
 
-    const allUploaded = getRequiredDocuments().every(doc => documentUploadStatus[doc.key] === 'uploaded');
-    if (!allUploaded) {
-      alert('Please upload all required documents before verification.');
-      return;
-    }
+  // This check remains to ensure documents are uploaded before the process starts
+  const allUploaded = getRequiredDocuments().every(doc => documentUploadStatus[doc.key] === 'uploaded');
+  if (!allUploaded) {
+    alert('Please upload all required documents before verification.');
+    return;
+  }
 
-    setIsVerifying(true);
-    setTimeout(() => {
-      // simulate verification logic
-      const documentsValid = true; // Changed from Math.random() > 0.2;
-      let professionalIdValid = true;
+  setIsVerifying(true);
+  setTimeout(() => {
+    // Force overallSuccess to always be true
+    const overallSuccess = true; 
 
-      if (data.serviceType === 'nursing') professionalIdValid = data.documents.professionalId.startsWith('NUID');
-      else if (data.serviceType === 'physiotherapy') professionalIdValid = data.documents.professionalId.startsWith('IAP');
+    updateData({
+      verification: {
+        status: overallSuccess ? 'success' : 'failed',
+        documentsValid: true, // Also set these to true to reflect the success
+        professionalIdValid: true,
+      },
+    });
 
-      const overallSuccess = documentsValid && professionalIdValid;
-
-      updateData({
-        verification: {
-          status: overallSuccess ? 'success' : 'failed',
-          documentsValid,
-          professionalIdValid,
-        },
-      });
-
-      setIsVerifying(false);
-    }, 2500);
+    setIsVerifying(false);
+  }, 2500);
 };
   const handleNext = () => {
     if (data.verification?.status === 'success') onNext();

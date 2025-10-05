@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CreditCard, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 // FIX: Changed '../' to '../../' to access CaregiverRegistration from the 'registration' sub-folder
-import { RegistrationData } from 'C:/Users/ASUS/homecare/src/components/caregiver/CaregiverRegistration.tsx'; 
+import { RegistrationData } from '../CaregiverRegistration';
 
 interface PaymentStepProps {
   data: RegistrationData;
